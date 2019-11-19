@@ -24,6 +24,3 @@
 
 # Ignore simplecov
 /coverage
-
-# Ignore Gemlock
-Gemfile.*
