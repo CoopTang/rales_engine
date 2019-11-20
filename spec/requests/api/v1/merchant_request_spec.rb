@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Merchants API:" do
   it 'Index' do
-    create_list(:merchant, 3)
+    create_list(:merchant, 2)
 
     get '/api/v1/merchants'
 
@@ -10,6 +10,9 @@ RSpec.describe "Merchants API:" do
 
     merchants = JSON.parse(response.body)
 
-    expect(merchants.count).to eq(3)
+    expect(merchants["data"].count).to eq(2)
+
+    expect(merchants["data"][0]["attributes"]["name"]).to eq("merchant_1")
+    expect(merchants["data"][1]["attributes"]["name"]).to eq("merchant_2")
   end
 end
