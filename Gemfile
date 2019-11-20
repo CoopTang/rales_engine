@@ -14,6 +14,7 @@ gem 'rspec-rails'
 # gem 'capistrano-rails', group: :development
 
 gem 'bootsnap', '>= 1.1.0', require: false
+gem 'fast_jsonapi'
 # gem 'rack-cors'
 
 group :development, :test do
