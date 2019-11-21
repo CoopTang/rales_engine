@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       resources :merchants, only: [:index, :show] do
         collection do
           get 'find', to: 'merchants#show'
+          get 'find_all'
         end
       end
     end
