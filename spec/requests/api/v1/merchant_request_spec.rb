@@ -122,4 +122,16 @@ RSpec.describe "Merchants API:" do
       expect(merchants["data"][0]["attributes"]["name"]).to eq("merchant_1")
     end
   end
+
+  it 'Random' do
+    create_list(:merchant, 5)
+
+    get '/api/v1/merchants/random'
+
+    merchant = JSON.parse(response.body)
+
+    result = Merchant.all.include?(merchant['data']['attributes']['name'])
+
+    expect(result).to eq(true)
+  end
 end
