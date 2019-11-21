@@ -130,8 +130,8 @@ RSpec.describe "Merchants API:" do
 
     merchant = JSON.parse(response.body)
 
-    result = Merchant.all.include?(merchant['data']['attributes']['name'])
+    result = Merchant.find_by(id: merchant['data']['attributes']['id'])
 
-    expect(result).to eq(true)
+    expect(result).to_not eq(nil)
   end
 end
