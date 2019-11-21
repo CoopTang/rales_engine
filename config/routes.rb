@@ -5,6 +5,7 @@ Rails.application.routes.draw do
         collection do
           get 'find', to: 'merchants#show'
           get 'find_all'
+          get 'random'
         end
       end
     end
