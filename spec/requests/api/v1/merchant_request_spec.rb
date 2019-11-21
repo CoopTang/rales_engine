@@ -29,4 +29,16 @@ RSpec.describe "Merchants API:" do
 
     expect(merchant["data"]["attributes"]["name"]).to eq("merchant_2")
   end
+  
+  describe 'Find' do
+    it 'by id' do
+      create_list(:merchant, 2)
+      
+      get "/api/v1/merchants/find?id=#{Merchant.first.id}"
+      
+      merchant = JSON.parse(response.body)
+      
+      expect(merchant["data"]["attributes"]["name"]).to eq("merchant_1")
+    end
+  end
 end
