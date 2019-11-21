@@ -40,5 +40,45 @@ RSpec.describe "Merchants API:" do
       
       expect(merchant["data"]["attributes"]["name"]).to eq("merchant_1")
     end
+
+    it 'by name' do
+      create_list(:merchant, 2)
+      
+      get "/api/v1/merchants/find?name=#{Merchant.last.name}"
+      
+      merchant = JSON.parse(response.body)
+      
+      expect(merchant["data"]["attributes"]["name"]).to eq("merchant_2")
+    end
+
+    xit 'by created_at' do
+      create_list(:merchant, 2)
+      
+      get "/api/v1/merchants/find?created_at=#{Merchant.first.created_at}"
+      
+      merchant = JSON.parse(response.body)
+      
+      expect(merchant["data"]["attributes"]["name"]).to eq("merchant_1")
+    end
+
+    xit 'by created_at' do
+      create_list(:merchant, 2)
+      
+      get "/api/v1/merchants/find?updated_at=#{Merchant.last.updated_at}"
+      
+      merchant = JSON.parse(response.body)
+      
+      expect(merchant["data"]["attributes"]["name"]).to eq("merchant_2")
+    end
+
+    it 'by multiple queries' do
+      create_list(:merchant, 2)
+      
+      get "/api/v1/merchants/find?id=#{Merchant.first.id}&name=#{Merchant.first.name}"
+      
+      merchant = JSON.parse(response.body)
+      
+      expect(merchant["data"]["attributes"]["name"]).to eq("merchant_1")
+    end
   end
 end
