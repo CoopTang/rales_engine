@@ -205,7 +205,12 @@ RSpec.describe "Merchants API:" do
 
   it 'merchant_items' do
     merchant_1 = create(:merchant_with_items)
+    merchant_2 = create(:merchant_with_items)
 
     get "/api/v1/merchants/#{merchant_1.id}/items"
+
+    items = JSON.parse(response.body)['data']
+
+    expect(items.count).to eq(3)
   end
 end
