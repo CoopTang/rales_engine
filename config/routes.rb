@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      scope module: 'merchant' do
+      scope module: 'merchants' do
         resources :merchants, only: [:index, :show] do
           resources :items, only: [:index]
           resources :invoices, only: [:index]
