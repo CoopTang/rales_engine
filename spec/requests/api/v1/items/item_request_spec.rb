@@ -18,11 +18,11 @@ RSpec.describe "Item API:" do
 
     expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
     expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
-    expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
+    expect(items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
 
     expect(items["data"][1]["attributes"]["name"]).to eq("item_2")
     expect(items["data"][1]["attributes"]["description"]).to eq("item_description_2")
-    expect(items["data"][1]["attributes"]["unit_price"]).to eq(2)
+    expect(items["data"][1]["attributes"]["unit_price"]).to eq('0.02')
   end
 
   it 'Show' do
@@ -34,7 +34,7 @@ RSpec.describe "Item API:" do
 
     expect(item["data"]["attributes"]["name"]).to eq("item_2")
     expect(item["data"]["attributes"]["description"]).to eq("item_description_2")
-    expect(item["data"]["attributes"]["unit_price"]).to eq(2)
+    expect(item["data"]["attributes"]["unit_price"]).to eq('0.02')
   end
   
   describe 'Find' do
@@ -47,7 +47,7 @@ RSpec.describe "Item API:" do
       
       expect(item["data"]["attributes"]["name"]).to eq("item_1")
       expect(item["data"]["attributes"]["description"]).to eq("item_description_1")
-      expect(item["data"]["attributes"]["unit_price"]).to eq(1)
+      expect(item["data"]["attributes"]["unit_price"]).to eq('0.01')
     end
 
     it 'by name' do
@@ -59,7 +59,7 @@ RSpec.describe "Item API:" do
       
       expect(item["data"]["attributes"]["name"]).to eq("item_2")
       expect(item["data"]["attributes"]["description"]).to eq("item_description_2")
-      expect(item["data"]["attributes"]["unit_price"]).to eq(2)
+      expect(item["data"]["attributes"]["unit_price"]).to eq('0.02')
     end
 
     it 'by created_at' do
@@ -79,7 +79,7 @@ RSpec.describe "Item API:" do
       
       expect(item["data"]["attributes"]["name"]).to eq("item_1")
       expect(item["data"]["attributes"]["description"]).to eq("item_description_1")
-      expect(item["data"]["attributes"]["unit_price"]).to eq(1)
+      expect(item["data"]["attributes"]["unit_price"]).to eq('0.01')
     end
 
     it 'by updated_at' do
@@ -100,7 +100,7 @@ RSpec.describe "Item API:" do
       
       expect(item["data"]["attributes"]["name"]).to eq("item_2")
       expect(item["data"]["attributes"]["description"]).to eq("item_description_2")
-      expect(item["data"]["attributes"]["unit_price"]).to eq(2)
+      expect(item["data"]["attributes"]["unit_price"]).to eq('0.02')
     end
 
     it 'by multiple queries' do
@@ -112,7 +112,7 @@ RSpec.describe "Item API:" do
       
       expect(item["data"]["attributes"]["name"]).to eq("item_1")
       expect(item["data"]["attributes"]["description"]).to eq("item_description_1")
-      expect(item["data"]["attributes"]["unit_price"]).to eq(1)
+      expect(item["data"]["attributes"]["unit_price"]).to eq('0.01')
     end
   end
 
@@ -128,7 +128,7 @@ RSpec.describe "Item API:" do
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
       expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
-      expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
+      expect(items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
     end
     
     it 'by name' do
@@ -143,11 +143,11 @@ RSpec.describe "Item API:" do
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
       expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
-      expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
+      expect(items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
 
       expect(items["data"][1]["attributes"]["name"]).to eq("item_1")
       expect(items["data"][1]["attributes"]["description"]).to eq("item_description_2")
-      expect(items["data"][1]["attributes"]["unit_price"]).to eq(2)
+      expect(items["data"][1]["attributes"]["unit_price"]).to eq('0.02')
     end
 
     it 'by created_at' do
@@ -172,11 +172,11 @@ RSpec.describe "Item API:" do
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
       expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
-      expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
+      expect(items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
 
       expect(items["data"][1]["attributes"]["name"]).to eq("item_3")
       expect(items["data"][1]["attributes"]["description"]).to eq("item_description_3")
-      expect(items["data"][1]["attributes"]["unit_price"]).to eq(3)
+      expect(items["data"][1]["attributes"]["unit_price"]).to eq('0.03')
     end
 
     it 'by updated_at' do
@@ -204,11 +204,11 @@ RSpec.describe "Item API:" do
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
       expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
-      expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
+      expect(items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
 
       expect(items["data"][1]["attributes"]["name"]).to eq("item_3")
       expect(items["data"][1]["attributes"]["description"]).to eq("item_description_3")
-      expect(items["data"][1]["attributes"]["unit_price"]).to eq(3)
+      expect(items["data"][1]["attributes"]["unit_price"]).to eq('0.03')
     end
     
     it 'by multiple queries' do
@@ -223,11 +223,11 @@ RSpec.describe "Item API:" do
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
       expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
-      expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
+      expect(items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
 
       expect(items["data"][1]["attributes"]["name"]).to eq("item_1")
       expect(items["data"][1]["attributes"]["description"]).to eq("item_description_1")
-      expect(items["data"][1]["attributes"]["unit_price"]).to eq(2)
+      expect(items["data"][1]["attributes"]["unit_price"]).to eq('0.02')
     end
   end
 
