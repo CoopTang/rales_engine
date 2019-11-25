@@ -1,11 +1,6 @@
-class Api::V1::Merchant::MerchantsController < ApplicationController
-
-  def index
-    merchants = Merchant.all
-    render json: MerchantSerializer.new(merchants)
-  end
-
-  def show
+class Api::V1::Merchants::SearchController < ApplicationController
+  
+  def find
     merchant = Merchant.find_by(merchant_search_params)
     render json: MerchantSerializer.new(merchant)
   end
@@ -25,5 +20,4 @@ class Api::V1::Merchant::MerchantsController < ApplicationController
   def merchant_search_params
     params.permit(:id, :name, :created_at, :updated_at)
   end
-
 end
