@@ -6,7 +6,9 @@ FactoryBot.define do
     sequence :description do |n|
       "item_description_#{n}"
     end
-    unit_price { 1 }
+    sequence :unit_price do |n|
+      n
+    end
     merchant { nil }
   end
 end
