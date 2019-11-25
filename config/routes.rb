@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      scope module: 'merchant' do
+      scope module: 'merchants' do
         resources :merchants, only: [:index, :show] do
           resources :items, only: [:index]
           resources :invoices, only: [:index]
           collection do
-            get 'find', to: 'merchants#show'
-            get 'find_all'
-            get 'random'
+            get 'find',     to: 'search#find'
+            get 'find_all', to: 'search#find_all'
+            get 'random',   to: 'search#random'
           end
         end
       end
