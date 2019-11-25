@@ -23,6 +23,7 @@ class Api::V1::Items::SearchController < ApplicationController
       :name,
       :description,
       :unit_price,
+      :merchant_id,
       :created_at,
       :updated_at
     )
