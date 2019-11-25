@@ -12,6 +12,16 @@ Rails.application.routes.draw do
           end
         end
       end
+
+      scope module: 'items' do
+        resources :items, only: [:index, :show] do
+          collection do
+            get 'find',     to: 'search#find'
+            get 'find_all', to: 'search#find_all'
+            get 'random',   to: 'search#random'
+          end
+        end
+      end
     end
   end
 end
