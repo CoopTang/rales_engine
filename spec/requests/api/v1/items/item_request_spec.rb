@@ -17,7 +17,12 @@ RSpec.describe "Item API:" do
     expect(items["data"].count).to eq(2)
 
     expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
+    expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+    expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
+
     expect(items["data"][1]["attributes"]["name"]).to eq("item_2")
+    expect(items["data"][1]["attributes"]["description"]).to eq("description_2")
+    expect(items["data"][1]["attributes"]["unit_price"]).to eq(2)
   end
 
   it 'Show' do
@@ -28,6 +33,8 @@ RSpec.describe "Item API:" do
     item = JSON.parse(response.body)
 
     expect(item["data"]["attributes"]["name"]).to eq("item_2")
+    expect(items["data"]["attributes"]["description"]).to eq("description_2")
+    expect(items["data"]["attributes"]["unit_price"]).to eq(2)
   end
   
   describe 'Find' do
@@ -39,6 +46,8 @@ RSpec.describe "Item API:" do
       item = JSON.parse(response.body)
       
       expect(item["data"]["attributes"]["name"]).to eq("item_1")
+      expect(items["data"]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"]["attributes"]["unit_price"]).to eq(1)
     end
 
     it 'by name' do
@@ -49,6 +58,8 @@ RSpec.describe "Item API:" do
       item = JSON.parse(response.body)
       
       expect(item["data"]["attributes"]["name"]).to eq("item_2")
+      expect(items["data"]["attributes"]["description"]).to eq("description_2")
+      expect(items["data"]["attributes"]["unit_price"]).to eq(2)
     end
 
     it 'by created_at' do
@@ -67,6 +78,8 @@ RSpec.describe "Item API:" do
       item = JSON.parse(response.body)
       
       expect(item["data"]["attributes"]["name"]).to eq("item_1")
+      expect(items["data"]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"]["attributes"]["unit_price"]).to eq(1)
     end
 
     it 'by updated_at' do
@@ -86,6 +99,8 @@ RSpec.describe "Item API:" do
       item = JSON.parse(response.body)
       
       expect(item["data"]["attributes"]["name"]).to eq("item_2")
+      expect(items["data"]["attributes"]["description"]).to eq("description_2")
+      expect(items["data"]["attributes"]["unit_price"]).to eq(2)
     end
 
     it 'by multiple queries' do
@@ -96,6 +111,8 @@ RSpec.describe "Item API:" do
       item = JSON.parse(response.body)
       
       expect(item["data"]["attributes"]["name"]).to eq("item_1")
+      expect(items["data"]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"]["attributes"]["unit_price"]).to eq(1)
     end
   end
 
@@ -110,6 +127,8 @@ RSpec.describe "Item API:" do
       expect(items["data"].count).to eq(1)
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
+      expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
     end
     
     it 'by name' do
@@ -123,7 +142,12 @@ RSpec.describe "Item API:" do
       expect(items["data"].count).to eq(2)
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
+      expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
+
       expect(items["data"][1]["attributes"]["name"]).to eq("item_1")
+      expect(items["data"][1]["attributes"]["description"]).to eq("description_2")
+      expect(items["data"][1]["attributes"]["unit_price"]).to eq(2)
     end
 
     it 'by created_at' do
@@ -147,7 +171,12 @@ RSpec.describe "Item API:" do
       expect(items["data"].count).to eq(2)
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
+      expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
+
       expect(items["data"][1]["attributes"]["name"]).to eq("item_3")
+      expect(items["data"][1]["attributes"]["description"]).to eq("description_3")
+      expect(items["data"][1]["attributes"]["unit_price"]).to eq(3)
     end
 
     it 'by updated_at' do
@@ -174,7 +203,12 @@ RSpec.describe "Item API:" do
       expect(items["data"].count).to eq(2)
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
+      expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
+
       expect(items["data"][1]["attributes"]["name"]).to eq("item_3")
+      expect(items["data"][1]["attributes"]["description"]).to eq("description_3")
+      expect(items["data"][1]["attributes"]["unit_price"]).to eq(3)
     end
     
     it 'by multiple queries' do
@@ -188,6 +222,12 @@ RSpec.describe "Item API:" do
       expect(items["data"].count).to eq(1)
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
+      expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
+      
+      expect(items["data"][1]["attributes"]["name"]).to eq("item_1")
+      expect(items["data"][1]["attributes"]["description"]).to eq("description_2")
+      expect(items["data"][1]["attributes"]["unit_price"]).to eq(2)
     end
   end
 
