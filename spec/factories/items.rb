@@ -9,6 +9,6 @@ FactoryBot.define do
     sequence :unit_price do |n|
       n
     end
-    merchant { nil }
+    merchant
   end
 end
