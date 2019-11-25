@@ -17,11 +17,11 @@ RSpec.describe "Item API:" do
     expect(items["data"].count).to eq(2)
 
     expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
-    expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+    expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
     expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
 
     expect(items["data"][1]["attributes"]["name"]).to eq("item_2")
-    expect(items["data"][1]["attributes"]["description"]).to eq("description_2")
+    expect(items["data"][1]["attributes"]["description"]).to eq("item_description_2")
     expect(items["data"][1]["attributes"]["unit_price"]).to eq(2)
   end
 
@@ -33,8 +33,8 @@ RSpec.describe "Item API:" do
     item = JSON.parse(response.body)
 
     expect(item["data"]["attributes"]["name"]).to eq("item_2")
-    expect(items["data"]["attributes"]["description"]).to eq("description_2")
-    expect(items["data"]["attributes"]["unit_price"]).to eq(2)
+    expect(item["data"]["attributes"]["description"]).to eq("item_description_2")
+    expect(item["data"]["attributes"]["unit_price"]).to eq(2)
   end
   
   describe 'Find' do
@@ -46,8 +46,8 @@ RSpec.describe "Item API:" do
       item = JSON.parse(response.body)
       
       expect(item["data"]["attributes"]["name"]).to eq("item_1")
-      expect(items["data"]["attributes"]["description"]).to eq("description_1")
-      expect(items["data"]["attributes"]["unit_price"]).to eq(1)
+      expect(item["data"]["attributes"]["description"]).to eq("item_description_1")
+      expect(item["data"]["attributes"]["unit_price"]).to eq(1)
     end
 
     it 'by name' do
@@ -58,8 +58,8 @@ RSpec.describe "Item API:" do
       item = JSON.parse(response.body)
       
       expect(item["data"]["attributes"]["name"]).to eq("item_2")
-      expect(items["data"]["attributes"]["description"]).to eq("description_2")
-      expect(items["data"]["attributes"]["unit_price"]).to eq(2)
+      expect(item["data"]["attributes"]["description"]).to eq("item_description_2")
+      expect(item["data"]["attributes"]["unit_price"]).to eq(2)
     end
 
     it 'by created_at' do
@@ -78,8 +78,8 @@ RSpec.describe "Item API:" do
       item = JSON.parse(response.body)
       
       expect(item["data"]["attributes"]["name"]).to eq("item_1")
-      expect(items["data"]["attributes"]["description"]).to eq("description_1")
-      expect(items["data"]["attributes"]["unit_price"]).to eq(1)
+      expect(item["data"]["attributes"]["description"]).to eq("item_description_1")
+      expect(item["data"]["attributes"]["unit_price"]).to eq(1)
     end
 
     it 'by updated_at' do
@@ -99,8 +99,8 @@ RSpec.describe "Item API:" do
       item = JSON.parse(response.body)
       
       expect(item["data"]["attributes"]["name"]).to eq("item_2")
-      expect(items["data"]["attributes"]["description"]).to eq("description_2")
-      expect(items["data"]["attributes"]["unit_price"]).to eq(2)
+      expect(item["data"]["attributes"]["description"]).to eq("item_description_2")
+      expect(item["data"]["attributes"]["unit_price"]).to eq(2)
     end
 
     it 'by multiple queries' do
@@ -111,8 +111,8 @@ RSpec.describe "Item API:" do
       item = JSON.parse(response.body)
       
       expect(item["data"]["attributes"]["name"]).to eq("item_1")
-      expect(items["data"]["attributes"]["description"]).to eq("description_1")
-      expect(items["data"]["attributes"]["unit_price"]).to eq(1)
+      expect(item["data"]["attributes"]["description"]).to eq("item_description_1")
+      expect(item["data"]["attributes"]["unit_price"]).to eq(1)
     end
   end
 
@@ -127,7 +127,7 @@ RSpec.describe "Item API:" do
       expect(items["data"].count).to eq(1)
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
-      expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
       expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
     end
     
@@ -142,11 +142,11 @@ RSpec.describe "Item API:" do
       expect(items["data"].count).to eq(2)
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
-      expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
       expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
 
       expect(items["data"][1]["attributes"]["name"]).to eq("item_1")
-      expect(items["data"][1]["attributes"]["description"]).to eq("description_2")
+      expect(items["data"][1]["attributes"]["description"]).to eq("item_description_2")
       expect(items["data"][1]["attributes"]["unit_price"]).to eq(2)
     end
 
@@ -171,11 +171,11 @@ RSpec.describe "Item API:" do
       expect(items["data"].count).to eq(2)
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
-      expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
       expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
 
       expect(items["data"][1]["attributes"]["name"]).to eq("item_3")
-      expect(items["data"][1]["attributes"]["description"]).to eq("description_3")
+      expect(items["data"][1]["attributes"]["description"]).to eq("item_description_3")
       expect(items["data"][1]["attributes"]["unit_price"]).to eq(3)
     end
 
@@ -203,30 +203,30 @@ RSpec.describe "Item API:" do
       expect(items["data"].count).to eq(2)
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
-      expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
       expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
 
       expect(items["data"][1]["attributes"]["name"]).to eq("item_3")
-      expect(items["data"][1]["attributes"]["description"]).to eq("description_3")
+      expect(items["data"][1]["attributes"]["description"]).to eq("item_description_3")
       expect(items["data"][1]["attributes"]["unit_price"]).to eq(3)
     end
     
     it 'by multiple queries' do
       item_1 = create(:item)
-      item_2 = create(:item, name: "item_1")
+      item_2 = create(:item, name: "item_1", description: 'item_description_1')
       
-      get "/api/v1/items/find_all?id=#{Item.first.id}&name=#{Item.first.name}"
+      get "/api/v1/items/find_all?description=#{Item.first.description}&name=#{Item.first.name}"
 
       items = JSON.parse(response.body)
       
-      expect(items["data"].count).to eq(1)
+      expect(items["data"].count).to eq(2)
       
       expect(items["data"][0]["attributes"]["name"]).to eq("item_1")
-      expect(items["data"][0]["attributes"]["description"]).to eq("description_1")
+      expect(items["data"][0]["attributes"]["description"]).to eq("item_description_1")
       expect(items["data"][0]["attributes"]["unit_price"]).to eq(1)
-      
+
       expect(items["data"][1]["attributes"]["name"]).to eq("item_1")
-      expect(items["data"][1]["attributes"]["description"]).to eq("description_2")
+      expect(items["data"][1]["attributes"]["description"]).to eq("item_description_1")
       expect(items["data"][1]["attributes"]["unit_price"]).to eq(2)
     end
   end
