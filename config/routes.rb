@@ -6,9 +6,9 @@ Rails.application.routes.draw do
           resources :items, only: [:index]
           resources :invoices, only: [:index]
           collection do
-            get 'find', to: 'merchants#show'
-            get 'find_all'
-            get 'random'
+            get 'find',     to: 'search#find'
+            get 'find_all', to: 'search#find_all'
+            get 'random',   to: 'search#random'
           end
         end
       end
