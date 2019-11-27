@@ -264,6 +264,6 @@ RSpec.describe "Item API:" do
 
     invoice_items = JSON.parse(response.body)
 
-    expect(invoice_items['data']['attributes'].count).to eq(3)
+    expect(invoice_items['data'].count).to eq(3)
   end
 end
