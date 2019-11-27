@@ -1,12 +1,13 @@
 class Api::V1::Items::SearchController < ApplicationController
+  before_action :convert_to_cents
 
   def find
-    item = Item.find_by(item_search_params)
+    item = Item.order(:id).find_by(item_search_params)
     render json: ItemSerializer.new(item)
   end
 
   def find_all
-    items = Item.where(item_search_params)
+    items = Item.order(:id).where(item_search_params)
     render json: ItemSerializer.new(items)
   end
 
@@ -27,5 +28,11 @@ class Api::V1::Items::SearchController < ApplicationController
       :created_at,
       :updated_at
     )
+  end
+
+  def convert_to_cents
+    if params[:unit_price]
+      params[:unit_price] = params[:unit_price].delete('^0-9').to_i
+    end
   end
 end
