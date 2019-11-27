@@ -242,4 +242,18 @@ RSpec.describe "Item API:" do
 
     expect(result).to_not eq(nil)
   end
+
+  it 'item_merchant' do
+    merchant_1 = create(:merchant_with_items)
+
+    item = Merchant.last.items.first
+
+    get "/api/v1/items/#{item.id}/merchant"
+
+    merchant = JSON.parse(response.body)
+
+    expect(merchant['data']['attributes']['id']).to eq(merchant_1.id)
+    expect(merchant['data']['attributes']['name']).to eq("merchant_1")
+    expect(merchant['data']['type']).to eq("merchant")
+  end
 end
