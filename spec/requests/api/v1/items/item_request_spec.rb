@@ -256,4 +256,14 @@ RSpec.describe "Item API:" do
     expect(merchant['data']['attributes']['name']).to eq("merchant_1")
     expect(merchant['data']['type']).to eq("merchant")
   end
+
+  it 'invoice_items' do
+    item = create(:item_with_invoices)
+
+    get "/api/v1/items/#{item.id}/invoice_items"
+
+    invoice_items = JSON.parse(response.body)
+
+    expect(invoice_items['data']['attributes'].count).to eq(3)
+  end
 end
