@@ -21,16 +21,16 @@ RSpec.describe "InvoiceItem API:" do
 
     expect(invoice_items["data"].count).to eq(2)
 
-    expect(invoice_items["data"][0]["attributes"]["id"]).to eq("#{invoice_item_1.id}")
-    expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq("#{item_1.id}")
-    expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq("#{invoice_1.id}")
-    expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq("1")
+    expect(invoice_items["data"][0]["attributes"]["id"]).to eq(invoice_item_1.id)
+    expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq(item_1.id)
+    expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+    expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq(1)
     expect(invoice_items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
 
-    expect(invoice_items["data"][1]["attributes"]["id"]).to eq("#{invoice_item_2.id}")
-    expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq("#{item_2.id}")
-    expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq("#{invoice_2.id}")
-    expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq("2")
+    expect(invoice_items["data"][1]["attributes"]["id"]).to eq(invoice_item_2.id)
+    expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq(item_2.id)
+    expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq(invoice_2.id)
+    expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq(2)
     expect(invoice_items["data"][1]["attributes"]["unit_price"]).to eq('0.02')
   end
 
@@ -42,14 +42,14 @@ RSpec.describe "InvoiceItem API:" do
     invoice_1 = Invoice.first
     invoice_2 = Invoice.last
 
-    get "/api/v1/invoice_items/#{Item.last.id}"
+    get "/api/v1/invoice_items/#{InvoiceItem.last.id}"
 
     invoice_item = JSON.parse(response.body)
 
-    expect(invoice_item["data"]["attributes"]["id"]).to eq("#{invoice_item_2.id}")
-    expect(invoice_item["data"]["attributes"]["item_id"]).to eq("#{item_2.id}")
-    expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq("#{invoice_2.id}")
-    expect(invoice_item["data"]["attributes"]["quantity"]).to eq("2")
+    expect(invoice_item["data"]["attributes"]["id"]).to eq(invoice_item_2.id)
+    expect(invoice_item["data"]["attributes"]["item_id"]).to eq(item_2.id)
+    expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq(invoice_2.id)
+    expect(invoice_item["data"]["attributes"]["quantity"]).to eq(2)
     expect(invoice_item["data"]["attributes"]["unit_price"]).to eq('0.02')
   end
   
@@ -62,18 +62,18 @@ RSpec.describe "InvoiceItem API:" do
       invoice_1 = Invoice.first
       invoice_2 = Invoice.last
       
-      get "/api/v1/invoice_items/find?id=#{Item.first.id}"
+      get "/api/v1/invoice_items/find?id=#{InvoiceItem.first.id}"
       
       invoice_item = JSON.parse(response.body)
       
-      expect(invoice_item["data"]["attributes"]["id"]).to eq("#{invoice_item_1.id}")
-      expect(invoice_item["data"]["attributes"]["item_id"]).to eq("#{item_1.id}")
-      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq("#{invoice_1.id}")
-      expect(invoice_item["data"]["attributes"]["quantity"]).to eq("1")
+      expect(invoice_item["data"]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_item["data"]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_item["data"]["attributes"]["quantity"]).to eq(1)
       expect(invoice_item["data"]["attributes"]["unit_price"]).to eq('0.01')
     end
 
-    it 'by name' do
+    it 'by item_id' do
       invoice_item_1 = create(:invoice_item)
       invoice_item_2 = create(:invoice_item)
       item_1    = Item.first
@@ -81,17 +81,74 @@ RSpec.describe "InvoiceItem API:" do
       invoice_1 = Invoice.first
       invoice_2 = Invoice.last
       
-      get "/api/v1/invoice_items/find?name=#{Item.last.name}"
+      get "/api/v1/invoice_items/find?item_id=#{Item.last.id}"
       
       invoice_item = JSON.parse(response.body)
       
-      expect(invoice_item["data"]["attributes"]["id"]).to eq("#{invoice_item_2.id}")
-      expect(invoice_item["data"]["attributes"]["item_id"]).to eq("#{item_2.id}")
-      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq("#{invoice_2.id}")
-      expect(invoice_item["data"]["attributes"]["quantity"]).to eq("2")
+      expect(invoice_item["data"]["attributes"]["id"]).to eq(invoice_item_2.id)
+      expect(invoice_item["data"]["attributes"]["item_id"]).to eq(item_2.id)
+      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq(invoice_2.id)
+      expect(invoice_item["data"]["attributes"]["quantity"]).to eq(2)
       expect(invoice_item["data"]["attributes"]["unit_price"]).to eq('0.02')
     end
 
+    it 'by invoice_id' do
+      invoice_item_1 = create(:invoice_item)
+      invoice_item_2 = create(:invoice_item)
+      item_1    = Item.first
+      item_2    = Item.last
+      invoice_1 = Invoice.first
+      invoice_2 = Invoice.last
+      
+      get "/api/v1/invoice_items/find?invoice_id=#{Invoice.first.id}"
+      
+      invoice_item = JSON.parse(response.body)
+      
+      expect(invoice_item["data"]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_item["data"]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_item["data"]["attributes"]["quantity"]).to eq(1)
+      expect(invoice_item["data"]["attributes"]["unit_price"]).to eq('0.01')
+    end
+
+    it 'by quantity' do
+      invoice_item_1 = create(:invoice_item)
+      invoice_item_2 = create(:invoice_item)
+      item_1    = Item.first
+      item_2    = Item.last
+      invoice_1 = Invoice.first
+      invoice_2 = Invoice.last
+      
+      get "/api/v1/invoice_items/find?quantity=#{invoice_item_2.quantity}"
+      
+      invoice_item = JSON.parse(response.body)
+      
+      expect(invoice_item["data"]["attributes"]["id"]).to eq(invoice_item_2.id)
+      expect(invoice_item["data"]["attributes"]["item_id"]).to eq(item_2.id)
+      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq(invoice_2.id)
+      expect(invoice_item["data"]["attributes"]["quantity"]).to eq(2)
+      expect(invoice_item["data"]["attributes"]["unit_price"]).to eq('0.02')
+    end
+
+    it 'by unit_price' do
+      invoice_item_1 = create(:invoice_item)
+      invoice_item_2 = create(:invoice_item)
+      item_1    = Item.first
+      item_2    = Item.last
+      invoice_1 = Invoice.first
+      invoice_2 = Invoice.last
+      
+      get "/api/v1/invoice_items/find?unit_price=#{invoice_item_1.unit_price}"
+      
+      invoice_item = JSON.parse(response.body)
+      
+      expect(invoice_item["data"]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_item["data"]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_item["data"]["attributes"]["quantity"]).to eq(1)
+      expect(invoice_item["data"]["attributes"]["unit_price"]).to eq('0.01')
+    end
+    
     it 'by created_at' do
       invoice_item_1 = create(
         :invoice_item,
@@ -111,10 +168,10 @@ RSpec.describe "InvoiceItem API:" do
       
       invoice_item = JSON.parse(response.body)
       
-      expect(invoice_item["data"]["attributes"]["id"]).to eq("#{invoice_item_1.id}")
-      expect(invoice_item["data"]["attributes"]["item_id"]).to eq("#{item_1.id}")
-      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq("#{invoice_1.id}")
-      expect(invoice_item["data"]["attributes"]["quantity"]).to eq("1")
+      expect(invoice_item["data"]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_item["data"]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_item["data"]["attributes"]["quantity"]).to eq(1)
       expect(invoice_item["data"]["attributes"]["unit_price"]).to eq('0.01')
     end
 
@@ -138,10 +195,10 @@ RSpec.describe "InvoiceItem API:" do
       
       invoice_item = JSON.parse(response.body)
       
-      expect(invoice_item["data"]["attributes"]["id"]).to eq("#{invoice_item_2.id}")
-      expect(invoice_item["data"]["attributes"]["item_id"]).to eq("#{item_2.id}")
-      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq("#{invoice_2.id}")
-      expect(invoice_item["data"]["attributes"]["quantity"]).to eq("2")
+      expect(invoice_item["data"]["attributes"]["id"]).to eq(invoice_item_2.id)
+      expect(invoice_item["data"]["attributes"]["item_id"]).to eq(item_2.id)
+      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq(invoice_2.id)
+      expect(invoice_item["data"]["attributes"]["quantity"]).to eq(2)
       expect(invoice_item["data"]["attributes"]["unit_price"]).to eq('0.02')
     end
 
@@ -153,14 +210,14 @@ RSpec.describe "InvoiceItem API:" do
       invoice_1 = Invoice.first
       invoice_2 = Invoice.last
       
-      get "/api/v1/invoice_items/find?id=#{Item.first.id}&name=#{Item.first.name}"
+      get "/api/v1/invoice_items/find?quantity=#{invoice_item_1.quantity}&unit_price=#{invoice_item_1.unit_price}"
       
       invoice_item = JSON.parse(response.body)
       
-      expect(invoice_item["data"]["attributes"]["id"]).to eq("#{invoice_item_1.id}")
-      expect(invoice_item["data"]["attributes"]["item_id"]).to eq("#{item_1.id}")
-      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq("#{invoice_1.id}")
-      expect(invoice_item["data"]["attributes"]["quantity"]).to eq("1")
+      expect(invoice_item["data"]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_item["data"]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_item["data"]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_item["data"]["attributes"]["quantity"]).to eq(1)
       expect(invoice_item["data"]["attributes"]["unit_price"]).to eq('0.01')
     end
   end
@@ -180,11 +237,150 @@ RSpec.describe "InvoiceItem API:" do
 
       expect(invoice_items["data"].count).to eq(1)
       
-      expect(invoice_items["data"][0]["attributes"]["id"]).to eq("#{invoice_item_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq("#{item_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq("#{invoice_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq("1")
+      expect(invoice_items["data"][0]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq(1)
       expect(invoice_items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
+    end
+
+    it 'by item_id' do
+      invoice_item_1 = create(
+        :invoice_item,
+      )
+      invoice_item_2 = create(
+        :invoice_item,
+      )
+      invoice_item_3 = create(
+        :invoice_item,
+        item: invoice_item_1.item
+      )
+      item_1    = Item.first
+      invoice_1 = Invoice.first
+      invoice_3 = Invoice.last
+    
+      get "/api/v1/invoice_items/find_all?item_id=#{invoice_item_1.item_id}"
+
+      invoice_items = JSON.parse(response.body)
+      
+      expect(invoice_items["data"].count).to eq(2)
+      
+      expect(invoice_items["data"][0]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq(1)
+      expect(invoice_items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
+
+      expect(invoice_items["data"][1]["attributes"]["id"]).to eq(invoice_item_3.id)
+      expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq(invoice_3.id)
+      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq(3)
+      expect(invoice_items["data"][1]["attributes"]["unit_price"]).to eq('0.03')
+    end
+
+    it 'by invoice_id' do
+      invoice_item_1 = create(
+        :invoice_item,
+      )
+      invoice_item_2 = create(
+        :invoice_item,
+      )
+      invoice_item_3 = create(
+        :invoice_item,
+        invoice: invoice_item_1.invoice
+      )
+      item_1    = Item.first
+      item_3    = Item.last
+      invoice_1 = Invoice.first
+      invoice_3 = Invoice.last
+    
+      get "/api/v1/invoice_items/find_all?invoice_id=#{invoice_item_1.invoice_id}"
+
+      invoice_items = JSON.parse(response.body)
+      
+      expect(invoice_items["data"].count).to eq(2)
+      
+      expect(invoice_items["data"][0]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq(1)
+      expect(invoice_items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
+
+      expect(invoice_items["data"][1]["attributes"]["id"]).to eq(invoice_item_3.id)
+      expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq(item_3.id)
+      expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq(3)
+      expect(invoice_items["data"][1]["attributes"]["unit_price"]).to eq('0.03')
+    end
+
+    it 'by unit_price' do
+      invoice_item_1 = create(
+        :invoice_item,
+      )
+      invoice_item_2 = create(
+        :invoice_item,
+      )
+      invoice_item_3 = create(
+        :invoice_item,
+        unit_price: invoice_item_1.unit_price
+      )
+      item_1    = Item.first
+      item_3    = Item.last
+      invoice_1 = Invoice.first
+      invoice_3 = Invoice.last
+    
+      get "/api/v1/invoice_items/find_all?unit_price=#{invoice_item_1.unit_price}"
+
+      invoice_items = JSON.parse(response.body)
+      
+      expect(invoice_items["data"].count).to eq(2)
+      
+      expect(invoice_items["data"][0]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq(1)
+      expect(invoice_items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
+
+      expect(invoice_items["data"][1]["attributes"]["id"]).to eq(invoice_item_3.id)
+      expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq(item_3.id)
+      expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq(invoice_3.id)
+      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq(3)
+      expect(invoice_items["data"][1]["attributes"]["unit_price"]).to eq('0.01')
+    end
+
+    it 'by quantity' do
+      invoice_item_1 = create(
+        :invoice_item,
+      )
+      invoice_item_2 = create(
+        :invoice_item,
+      )
+      invoice_item_3 = create(
+        :invoice_item,
+        quantity: invoice_item_1.quantity
+      )
+      item_1    = Item.first
+      item_3    = Item.last
+      invoice_1 = Invoice.first
+      invoice_3 = Invoice.last
+    
+      get "/api/v1/invoice_items/find_all?quantity=#{invoice_item_1.quantity}"
+
+      invoice_items = JSON.parse(response.body)
+      
+      expect(invoice_items["data"].count).to eq(2)
+      
+      expect(invoice_items["data"][0]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq(1)
+      expect(invoice_items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
+
+      expect(invoice_items["data"][1]["attributes"]["id"]).to eq(invoice_item_3.id)
+      expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq(item_3.id)
+      expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq(invoice_3.id)
+      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq(1)
+      expect(invoice_items["data"][1]["attributes"]["unit_price"]).to eq('0.03')
     end
 
     it 'by created_at' do
@@ -211,16 +407,16 @@ RSpec.describe "InvoiceItem API:" do
       
       expect(invoice_items["data"].count).to eq(2)
       
-      expect(invoice_items["data"][0]["attributes"]["id"]).to eq("#{invoice_item_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq("#{item_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq("#{invoice_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq("1")
+      expect(invoice_items["data"][0]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq(1)
       expect(invoice_items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
 
-      expect(invoice_items["data"][1]["attributes"]["id"]).to eq("#{invoice_item_3.id}")
-      expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq("#{item_3.id}")
-      expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq("#{invoice_3.id}")
-      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq("3")
+      expect(invoice_items["data"][1]["attributes"]["id"]).to eq(invoice_item_3.id)
+      expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq(item_3.id)
+      expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq(invoice_3.id)
+      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq(3)
       expect(invoice_items["data"][1]["attributes"]["unit_price"]).to eq('0.03')
     end
 
@@ -251,16 +447,16 @@ RSpec.describe "InvoiceItem API:" do
 
       expect(invoice_items["data"].count).to eq(2)
       
-      expect(invoice_items["data"][0]["attributes"]["id"]).to eq("#{invoice_item_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq("#{item_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq("#{invoice_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq("1")
+      expect(invoice_items["data"][0]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq(1)
       expect(invoice_items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
 
-      expect(invoice_items["data"][1]["attributes"]["id"]).to eq("#{invoice_item_3.id}")
-      expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq("#{item_3.id}")
-      expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq("#{invoice_3.id}")
-      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq("3")
+      expect(invoice_items["data"][1]["attributes"]["id"]).to eq(invoice_item_3.id)
+      expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq(item_3.id)
+      expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq(invoice_3.id)
+      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq(3)
       expect(invoice_items["data"][1]["attributes"]["unit_price"]).to eq('0.03')
     end
     
@@ -268,7 +464,7 @@ RSpec.describe "InvoiceItem API:" do
       invoice_item_1 = create(:invoice_item)
       invoice_item_2 = create(:invoice_item, quantity: 1, unit_price: 1)
       item_1    = Item.first
-      item_2    = Item.last
+      item_3    = Item.last
       invoice_1 = Invoice.first
       invoice_2 = Invoice.last
       
@@ -278,16 +474,16 @@ RSpec.describe "InvoiceItem API:" do
       
       expect(invoice_items["data"].count).to eq(2)
       
-      expect(invoice_items["data"][0]["attributes"]["id"]).to eq("#{invoice_item_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq("#{item_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq("#{invoice_1.id}")
-      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq("1")
+      expect(invoice_items["data"][0]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["item_id"]).to eq(item_1.id)
+      expect(invoice_items["data"][0]["attributes"]["invoice_id"]).to eq(invoice_1.id)
+      expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq(1)
       expect(invoice_items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
 
-      expect(invoice_items["data"][1]["attributes"]["id"]).to eq("#{invoice_item_1.id}")
-      expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq("#{item_2.id}")
-      expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq("#{invoice_2.id}")
-      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq("2")
+      expect(invoice_items["data"][1]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq(item_2.id)
+      expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq(invoice_2.id)
+      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq(2)
       expect(invoice_items["data"][1]["attributes"]["unit_price"]).to eq('0.02')
     end
   end
