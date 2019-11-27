@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       scope module: 'items' do
         resources :items, only: [:index, :show] do
           resource :merchant, only: [:show]
+          resources :invoice_items, only: [:index]
           collection do
             get 'find',     to: 'search#find'
             get 'find_all', to: 'search#find_all'
