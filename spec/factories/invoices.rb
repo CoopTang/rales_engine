@@ -18,7 +18,13 @@ FactoryBot.define do
       merchant
       status { "shipped" }
       after :create do |invoice|
-        create_list(:item, 3, merchant: invoice.merchant)
+        item_1 = create(:item, merchant: invoice.merchant)
+        item_2 = create(:item, merchant: invoice.merchant)
+        item_3 = create(:item, merchant: invoice.merchant)
+
+        create(:invoice_item, item: item_1, invoice: invoice)
+        create(:invoice_item, item: item_2, invoice: invoice)
+        create(:invoice_item, item: item_3, invoice: invoice)
       end
     end
 
