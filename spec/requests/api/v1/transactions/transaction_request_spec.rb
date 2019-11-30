@@ -113,7 +113,7 @@ RSpec.describe "Transaction API:" do
       
       expect(transaction["data"]["attributes"]["id"]).to eq(transaction_2.id)
       expect(transaction["data"]["attributes"]["invoice_id"]).to eq(invoice_2.id)
-      expect(transaction["data"]["attributes"]["credit_card_number"]).to eq('credit_card_number_1')
+      expect(transaction["data"]["attributes"]["credit_card_number"]).to eq('credit_card_number_2')
       expect(transaction["data"]["attributes"]["result"]).to eq('failure')
     end
 
@@ -174,7 +174,7 @@ RSpec.describe "Transaction API:" do
       
       get "/api/v1/transactions/find?result=success&id=#{transaction_1.id}"
       
-      item = JSON.parse(response.body)
+      transaction = JSON.parse(response.body)
       
       expect(transaction["data"]["attributes"]["id"]).to eq(transaction_1.id)
       expect(transaction["data"]["attributes"]["invoice_id"]).to eq(invoice_1.id)
@@ -214,7 +214,7 @@ RSpec.describe "Transaction API:" do
       invoice_1 = Invoice.first
       invoice_3 = Invoice.last
       
-      get "/api/v1/transactions/find?invoice_id=#{invoice_1.id}"
+      get "/api/v1/transactions/find_all?invoice_id=#{invoice_1.id}"
       
       transactions = JSON.parse(response.body)
 
@@ -240,7 +240,7 @@ RSpec.describe "Transaction API:" do
       invoice_1 = Invoice.first
       invoice_3 = Invoice.last
       
-      get "/api/v1/transactions/find?invoice_id=#{invoice_1.id}"
+      get "/api/v1/transactions/find_all?credit_card_number=#{transaction_1.credit_card_number}"
       
       transactions = JSON.parse(response.body)
 
@@ -269,7 +269,7 @@ RSpec.describe "Transaction API:" do
       invoice_1 = Invoice.first
       invoice_3 = Invoice.last
       
-      get "/api/v1/transactions/find?invoice_id=#{invoice_1.id}"
+      get "/api/v1/transactions/find_all?result=#{transaction_1.result}"
       
       transactions = JSON.parse(response.body)
 
@@ -334,6 +334,9 @@ RSpec.describe "Transaction API:" do
         created_at: "2012-03-27 14:53:59 UTC",
         updated_at: "2012-03-27 15:53:59 UTC"
       )
+
+      invoice_1 = Invoice.first
+      invoice_3 = Invoice.last
       
       get "/api/v1/transactions/find_all?updated_at=#{transaction_1.updated_at}"
       
@@ -369,6 +372,9 @@ RSpec.describe "Transaction API:" do
         created_at: "2012-03-27 14:53:59 UTC",
         updated_at: "2012-03-27 15:53:59 UTC"
       )
+
+      invoice_1 = Invoice.first
+      invoice_3 = Invoice.last
       
       get "/api/v1/transactions/find_all?result=success&updated_at=#{transaction_1.updated_at}"
       
@@ -393,20 +399,6 @@ RSpec.describe "Transaction API:" do
     result = Transaction.find_by(id: transaction['data']['attributes']['id'])
 
     expect(result).to_not eq(nil)
-  end
-
-  it 'item_merchant' do
-    merchant_1 = create(:merchant_with_items)
-
-    item = Merchant.last.items.first
-
-    get "/api/v1/transactions/#{item.id}/merchant"
-
-    merchant = JSON.parse(response.body)
-
-    expect(merchant['data']['attributes']['id']).to eq(merchant_1.id)
-    expect(merchant['data']['attributes']['name']).to eq("merchant_1")
-    expect(merchant['data']['type']).to eq("merchant")
   end
 
   it 'invoice' do
