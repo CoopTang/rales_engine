@@ -128,7 +128,7 @@ RSpec.describe "Invoice API:" do
       merchant_1 = invoice_1.merchant
       merchant_2 = invoice_2.merchant
 
-      get "/api/v1/invoices/find?status=#{merchant_2.status}"
+      get "/api/v1/invoices/find?status=#{invoice_2.status}"
       
       invoice = JSON.parse(response.body)
       
@@ -233,10 +233,10 @@ RSpec.describe "Invoice API:" do
 
       expect(invoices["data"].count).to eq(1)
       
-      expect(invoice["data"][0]["attributes"]["id"]).to eq(invoice_1.id)
-      expect(invoice["data"][0]["attributes"]["customer_id"]).to eq(customer_1.id)
-      expect(invoice["data"][0]["attributes"]["merchant_id"]).to eq(merchant_1.id)
-      expect(invoice["data"][0]["attributes"]["status"]).to eq(invoice_1.status)
+      expect(invoices["data"][0]["attributes"]["id"]).to eq(invoice_1.id)
+      expect(invoices["data"][0]["attributes"]["customer_id"]).to eq(customer_1.id)
+      expect(invoices["data"][0]["attributes"]["merchant_id"]).to eq(merchant_1.id)
+      expect(invoices["data"][0]["attributes"]["status"]).to eq(invoice_1.status)
     end
 
     it 'by customer_id' do
@@ -449,14 +449,14 @@ RSpec.describe "Invoice API:" do
 
     get "/api/v1/invoices/#{invoice_1.id}/items"
 
-    items = JSON.parse(response.body)
+    items = JSON.parse(response.body)['data']
 
-    expect(items['data'].count).to eq(3)
+    expect(items.count).to eq(3)
 
-    items.each.with_index do |item, i|
-      expect(items['data'][i]['attributes']['id']).to eq(item.id)
-      expect(items['data'][i]['attributes']['merchant_id']).to eq(merchant_1.id)
-      expect(items['data'][i]['type']).to eq("item")
+    items.each do |item|
+      expect(item['attributes']['id']).to_not eq(nil)
+      expect(item['attributes']['merchant_id']).to eq(merchant_1.id)
+      expect(item['type']).to eq("item")
     end
   end
 
@@ -465,14 +465,14 @@ RSpec.describe "Invoice API:" do
 
     get "/api/v1/invoices/#{invoice_1.id}/transactions"
 
-    transactions = JSON.parse(response.body)
+    transactions = JSON.parse(response.body)['data']
 
-    expect(transactions['data'].count).to eq(9)
+    expect(transactions.count).to eq(3)
 
-    transactions.each.with_index do |transaction, i|
-      expect(transactions['data'][i]['attributes']['id']).to eq(transaction.id)
-      expect(transactions['data'][i]['attributes']['invoice_id']).to eq(invoice_1.id)
-      expect(transactions['data'][i]['type']).to eq("transaction")
+    transactions.each do |transaction|
+      expect(transaction['attributes']['id']).to_not eq(nil)
+      expect(transaction['attributes']['invoice_id']).to eq(invoice_1.id)
+      expect(transaction['type']).to eq("transaction")
     end
   end
 
@@ -481,14 +481,14 @@ RSpec.describe "Invoice API:" do
 
     get "/api/v1/invoices/#{invoice_1.id}/invoice_items"
 
-    invoice_items = JSON.parse(response.body)
+    invoice_items = JSON.parse(response.body)['data']
 
-    expect(invoice_items['data'].count).to eq(3)
+    expect(invoice_items.count).to eq(3)
 
-    invoice_items.each.with_index do |invoice_item, i|
-      expect(invoice_items['data'][i]['attributes']['id']).to eq(invoice_item.id)
-      expect(invoice_items['data'][i]['attributes']['invoice_id']).to eq(invoice_1.id)
-      expect(invoice_items['data'][i]['type']).to eq("invoice_item")
+    invoice_items.each do |invoice_item|
+      expect(invoice_item['attributes']['id']).to_not eq(nil)
+      expect(invoice_item['attributes']['invoice_id']).to eq(invoice_1.id)
+      expect(invoice_item['type']).to eq("invoice_item")
     end
   end
 
@@ -499,12 +499,12 @@ RSpec.describe "Invoice API:" do
 
     get "/api/v1/invoices/#{invoice_1.id}/customer"
 
-    customer = JSON.parse(response.body)
+    customer = JSON.parse(response.body)['data']
 
-    expect(customer['data']['attributes']['id']).to eq(customer.id)
-    expect(customer['data']['attributes']['first_name']).to eq(customer.first_name)
-    expect(customer['data']['attributes']['last_name']).to eq(customer.last_name)
-    expect(customer['data']['type']).to eq("customer")
+    expect(customer['attributes']['id']).to_not eq(nil)
+    expect(customer['attributes']['first_name']).to_not eq(nil)
+    expect(customer['attributes']['last_name']).to_not eq(nil)
+    expect(customer['type']).to eq("customer")
   end
 
   it 'merchant' do
@@ -514,10 +514,10 @@ RSpec.describe "Invoice API:" do
 
     get "/api/v1/invoices/#{invoice_1.id}/merchant"
 
-    merchant = JSON.parse(response.body)
+    merchant = JSON.parse(response.body)['data']
 
-    expect(merchant['data']['attributes']['id']).to eq(merchant.id)
-    expect(merchant['data']['attributes']['name']).to eq(merchant.name)
-    expect(merchant['data']['type']).to eq("merchant")
+    expect(merchant['attributes']['id']).to eq(merchant_1.id)
+    expect(merchant['attributes']['name']).to eq(merchant_1.name)
+    expect(merchant['type']).to eq("merchant")
   end
 end
