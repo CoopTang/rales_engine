@@ -231,7 +231,7 @@ RSpec.describe "InvoiceItem API:" do
       invoice_1 = Invoice.first
       invoice_2 = Invoice.last
       
-      get "/api/v1/invoice_items/find_all?id=#{Item.first.id}"
+      get "/api/v1/invoice_items/find_all?id=#{InvoiceItem.first.id}"
       
       invoice_items = JSON.parse(response.body)
 
@@ -464,7 +464,7 @@ RSpec.describe "InvoiceItem API:" do
       invoice_item_1 = create(:invoice_item)
       invoice_item_2 = create(:invoice_item, quantity: 1, unit_price: 1)
       item_1    = Item.first
-      item_3    = Item.last
+      item_2    = Item.last
       invoice_1 = Invoice.first
       invoice_2 = Invoice.last
       
@@ -480,11 +480,11 @@ RSpec.describe "InvoiceItem API:" do
       expect(invoice_items["data"][0]["attributes"]["quantity"]).to eq(1)
       expect(invoice_items["data"][0]["attributes"]["unit_price"]).to eq('0.01')
 
-      expect(invoice_items["data"][1]["attributes"]["id"]).to eq(invoice_item_1.id)
+      expect(invoice_items["data"][1]["attributes"]["id"]).to eq(invoice_item_2.id)
       expect(invoice_items["data"][1]["attributes"]["item_id"]).to eq(item_2.id)
       expect(invoice_items["data"][1]["attributes"]["invoice_id"]).to eq(invoice_2.id)
-      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq(2)
-      expect(invoice_items["data"][1]["attributes"]["unit_price"]).to eq('0.02')
+      expect(invoice_items["data"][1]["attributes"]["quantity"]).to eq(1)
+      expect(invoice_items["data"][1]["attributes"]["unit_price"]).to eq('0.01')
     end
   end
 
@@ -495,14 +495,34 @@ RSpec.describe "InvoiceItem API:" do
 
     invoice_item = JSON.parse(response.body)
 
-    result = Item.find_by(id: invoice_item['data']['attributes']['id'])
+    result = InvoiceItem.find_by(id: invoice_item['data']['attributes']['id'])
 
     expect(result).to_not eq(nil)
   end
 
   it 'invoice' do
-  end
+    invoice_item_1 = create(:invoice_item)
+    invoice_1 = Invoice.first
 
+    get "/api/v1/invoice_items/#{invoice_item_1.id}/invoice"
+
+    invoice = JSON.parse(response.body)
+
+    expect(invoice["data"]["attributes"]["id"]).to eq(invoice_1.id)
+    expect(invoice["data"]["type"]).to eq('invoice')
+    expect(invoice["data"]["attributes"]["customer_id"]).to eq(invoice_1.customer.id)
+  end
+  
   it 'item' do
+    invoice_item_1 = create(:invoice_item)
+    item_1    = Item.first
+    
+    get "/api/v1/invoice_items/#{invoice_item_1.id}/item"
+    
+    item = JSON.parse(response.body)
+    
+    expect(item["data"]["attributes"]["id"]).to eq(item_1.id)
+    expect(item["data"]["type"]).to eq('item')
+    expect(item["data"]["attributes"]["name"]).to eq(item_1.name)
   end
 end
