@@ -14,6 +14,22 @@ RSpec.describe Item, type: :model do
   end
 
   describe 'methods' do
+    before :each do
+      FactoryBot.rewind_sequences
+    end
 
+    it 'most_revenue' do
+      item_1 = create(:item_with_transactions)
+      item_2 = create(:item_with_transactions)
+      item_3 = create(:item_with_transactions, unit_price: 1000)
+      item_4 = create(:item_with_transactions)
+      item_5 = create(:item_with_transactions)
+
+      result = Item.most_revenue(1)
+      expect(result).to eq([item_3])
+
+      result = Item.most_revenue(3)
+      expect(result).to eq([item_3, item_5, item_4])
+    end
   end
 end
