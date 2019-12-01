@@ -276,7 +276,7 @@ RSpec.describe "Transaction API:" do
       expect(transactions["data"][0]["attributes"]["id"]).to eq(transaction_1.id)
       expect(transactions["data"][0]["attributes"]["invoice_id"]).to eq(invoice_1.id)
       expect(transactions["data"][0]["attributes"]["credit_card_number"]).to eq('credit_card_number_1')
-      expect(transactions["data"][0]["attributes"]["result"]).to eq('failure')
+      expect(transactions["data"][0]["attributes"]["result"]).to eq('failed')
       
       expect(transactions["data"][1]["attributes"]["id"]).to eq(transaction_3.id)
       expect(transactions["data"][1]["attributes"]["invoice_id"]).to eq(invoice_3.id)

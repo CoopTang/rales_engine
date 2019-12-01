@@ -23,6 +23,7 @@ Rails.application.routes.draw do
             get 'random',   to: 'search#random'
 
             get 'most_revenue', to: 'sales_engine#most_revenue'
+            get ':id/best_day',     to: 'sales_engine#best_day'
           end
         end
       end
