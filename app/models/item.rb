@@ -15,4 +15,8 @@ class Item < ApplicationRecord
       .order("revenue DESC")
       .limit(quantity)
   end
+
+  def best_day
+    invoice_items.order(quantity: :desc, created_at: :desc).limit(1)
+  end
 end
