@@ -48,8 +48,7 @@ RSpec.describe Item, type: :model do
         item: item_1,
         unit_price: item_1.unit_price,
         quantity: 5,
-        created_at: "2012-03-27 14:53:00 UTC"
-        
+        created_at: "2012-03-26 14:53:59 UTC"
       )
       invoice_item_3 = create(
         :invoice_item,
@@ -57,7 +56,7 @@ RSpec.describe Item, type: :model do
         item: item_1,
         unit_price: item_1.unit_price,
         quantity: 5,
-        created_at: "2012-03-26 14:53:59 UTC"
+        created_at: "2012-03-27 14:53:00 UTC"
       )
 
       result = item_1.best_day
