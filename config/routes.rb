@@ -9,6 +9,8 @@ Rails.application.routes.draw do
             get 'find',     to: 'search#find'
             get 'find_all', to: 'search#find_all'
             get 'random',   to: 'search#random'
+
+            get 'most_revenue', to: 'sales_engine#most_revenue'
           end
         end
       end
