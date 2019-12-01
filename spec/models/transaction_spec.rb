@@ -12,6 +12,15 @@ RSpec.describe Transaction, type: :model do
   end
 
   describe 'methods' do
+    it 'successful' do
+      transaction_1 = create(:transaction)
+      transaction_2 = create(:transaction, result: 'failed')
+      transaction_3 = create(:transaction)
 
+      result = Transaction.successful.sort
+
+      expect(result.length).to eq(2) 
+      expect(result).to eq([transaction_1, transaction_3]) 
+    end
   end
 end

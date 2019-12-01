@@ -102,7 +102,7 @@ RSpec.describe "Transaction API:" do
 
     it 'by result' do
       transaction_1 = create(:transaction)
-      transaction_2 = create(:transaction, result: 'failure')
+      transaction_2 = create(:transaction, result: 'failed')
 
       invoice_1 = Invoice.first
       invoice_2 = Invoice.last
@@ -114,7 +114,7 @@ RSpec.describe "Transaction API:" do
       expect(transaction["data"]["attributes"]["id"]).to eq(transaction_2.id)
       expect(transaction["data"]["attributes"]["invoice_id"]).to eq(invoice_2.id)
       expect(transaction["data"]["attributes"]["credit_card_number"]).to eq('credit_card_number_2')
-      expect(transaction["data"]["attributes"]["result"]).to eq('failure')
+      expect(transaction["data"]["attributes"]["result"]).to eq('failed')
     end
 
     it 'by created_at' do
@@ -258,12 +258,12 @@ RSpec.describe "Transaction API:" do
     it 'by result' do
       transaction_1 = create(
         :transaction,
-        result: 'failure'
+        result: 'failed'
       )
       transaction_2 = create(:transaction)
       transaction_3 = create(
         :transaction,
-        result: 'failure'
+        result: 'failed'
       )
       
       invoice_1 = Invoice.first
@@ -281,7 +281,7 @@ RSpec.describe "Transaction API:" do
       expect(transactions["data"][1]["attributes"]["id"]).to eq(transaction_3.id)
       expect(transactions["data"][1]["attributes"]["invoice_id"]).to eq(invoice_3.id)
       expect(transactions["data"][1]["attributes"]["credit_card_number"]).to eq('credit_card_number_3')
-      expect(transactions["data"][1]["attributes"]["result"]).to eq('failure')
+      expect(transactions["data"][1]["attributes"]["result"]).to eq('failed')
     end
     
     it 'by created_at' do
@@ -368,7 +368,7 @@ RSpec.describe "Transaction API:" do
       )
       transaction_3 = create(
         :transaction,
-        result: 'failure',
+        result: 'failed',
         created_at: "2012-03-27 14:53:59 UTC",
         updated_at: "2012-03-27 15:53:59 UTC"
       )
