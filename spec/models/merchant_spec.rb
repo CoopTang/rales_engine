@@ -27,11 +27,11 @@ RSpec.describe Merchant, type: :model do
       end
 
       it 'can get a variable number of top merchants' do
-        result = Merchant.total_revenue(3)
+        result = Merchant.total_revenue(quantity: 3)
 
         expect(result).to eq([@merchant_2, @merchant_3, @merchant_1])
 
-        result = Merchant.total_revenue(2)
+        result = Merchant.total_revenue(quantity: 2)
 
         expect(result).to eq([@merchant_2, @merchant_3])
       end
