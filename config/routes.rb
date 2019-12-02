@@ -10,8 +10,9 @@ Rails.application.routes.draw do
             get 'find_all', to: 'search#find_all'
             get 'random',   to: 'search#random'
 
-            get 'most_revenue', to: 'sales_engine#most_revenue'
-            get 'revenue', to: 'sales_engine#revenue'
+            get 'most_revenue',          to: 'sales_engine#most_revenue'
+            get 'revenue',               to: 'sales_engine#revenue'
+            get ':id/favorite_customer', to: 'sales_engine#favorite_customer'
           end
         end
       end
@@ -26,7 +27,7 @@ Rails.application.routes.draw do
             get 'random',   to: 'search#random'
 
             get 'most_revenue', to: 'sales_engine#most_revenue'
-            get ':id/best_day',     to: 'sales_engine#best_day'
+            get ':id/best_day', to: 'sales_engine#best_day'
           end
         end
       end
