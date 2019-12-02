@@ -63,6 +63,8 @@ Rails.application.routes.draw do
             get 'find',     to: 'search#find'
             get 'find_all', to: 'search#find_all'
             get 'random',   to: 'search#random'
+
+            get ':id/favorite_merchant', to: 'sales_engine#favorite_merchant'
           end
         end
       end
