@@ -7,6 +7,10 @@ RSpec.describe Merchant, type: :model do
 
   describe 'relationships' do
     it { should have_many :items }
+    it { should have_many(:invoice_items).through(:items) }
+    it { should have_many(:invoices).through(:invoice_items) }
+    it { should have_many(:customers).through(:invoices) }
+    it { should have_many(:transactions).through(:invoices) }
   end
 
   describe 'methods' do
@@ -35,6 +39,14 @@ RSpec.describe Merchant, type: :model do
 
         expect(result).to eq([@merchant_2, @merchant_3])
       end
+    end
+
+    it '#favorite_customer' do
+      merchant_1 = create(:merchant)
+      merchant_2 = create(:merchant)
+
+      merchant_item_1 = create(:item, merchant: merchant_1)
+      merchant_item_2 = create(:item, merchant: merchant_2)
     end
   end
 end
