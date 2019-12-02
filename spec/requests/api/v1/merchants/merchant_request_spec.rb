@@ -213,4 +213,72 @@ RSpec.describe "Merchants API:" do
 
     expect(items.count).to eq(3)
   end
+
+  it 'merchant_invoices' do
+    merchant_1 = create(:merchant)
+    merchant_2 = create(:merchant)
+
+    merchant_1_item = create(:item, merchant: merchant_1)
+    merchant_2_item = create(:item, merchant: merchant_2)
+
+    customer_1 = create(:customer)
+    invoice_1 = create(
+      :invoice,
+      customer: customer_1,
+      merchant: merchant_1
+    )
+    invoice_item_1 = create(
+      :invoice_item,
+      invoice: invoice_1,
+      item: merchant_1_item
+    )
+    invoice_2 = create(
+      :invoice,
+      customer: customer_1,
+      merchant: merchant_1
+    )
+    invoice_item_2 = create(
+      :invoice_item,
+      invoice: invoice_2,
+      item: merchant_1_item
+    )
+    invoice_3 = create(
+      :invoice,
+      customer: customer_1,
+      merchant: merchant_1
+    )
+    invoice_item_3 = create(
+      :invoice_item,
+      invoice: invoice_3,
+      item: merchant_1_item
+    )
+    invoice_4 = create(
+      :invoice,
+      customer: customer_1,
+      merchant: merchant_2
+    )
+    invoice_item_4 = create(
+      :invoice_item,
+      invoice: invoice_3,
+      item: merchant_2_item
+    )
+
+    get "/api/v1/merchants/#{merchant_1.id}/invoices"
+
+    invoices = JSON.parse(response.body)['data']
+    
+    expect(invoices.length).to eq(3)
+
+    expect(invoices[0]['attributes']['id']).to eq(invoice_1.id)
+    expect(invoices[0]['attributes']['merchant_id']).to eq(merchant_1.id)
+    expect(invoices[0]['type']).to eq('invoice')
+
+    expect(invoices[1]['attributes']['id']).to eq(invoice_2.id)
+    expect(invoices[1]['attributes']['merchant_id']).to eq(merchant_1.id)
+    expect(invoices[1]['type']).to eq('invoice')
+
+    expect(invoices[2]['attributes']['id']).to eq(invoice_3.id)
+    expect(invoices[2]['attributes']['merchant_id']).to eq(merchant_1.id)
+    expect(invoices[2]['type']).to eq('invoice')
+  end
 end
