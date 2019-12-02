@@ -11,6 +11,7 @@ Rails.application.routes.draw do
             get 'random',   to: 'search#random'
 
             get 'most_revenue', to: 'sales_engine#most_revenue'
+            get 'revenue', to: 'sales_engine#revenue'
           end
         end
       end
